@@ -2,9 +2,11 @@
   "name": "umeed-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
     "react-router-dom": "^6.15.0",
     "axios": "^1.5.0",
     "@headlessui/react": "^1.7.17",
@@ -31,7 +33,6 @@
   "devDependencies": {
     "tailwindcss": "^3.3.0",
     "autoprefixer": "^10.4.14",
-    "postcss": "^8.4.27",
-    "react-scripts": "5.0.1"
+    "postcss": "^8.4.27"
   }
 }
