@@ -1,0 +1,51 @@
+# Root level ignores
+*.log
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories (already in subdirectories, but added for safety)
+backend/node_modules/
+frontend/node_modules/
+
+# Build directories
+backend/dist/
+frontend/build/
+frontend/dist/
+
+# Coverage reports
+backend/coverage/
+frontend/coverage/
+
+# Uploads and temporary files
+backend/uploads/
+backend/temp/
+frontend/temp/
