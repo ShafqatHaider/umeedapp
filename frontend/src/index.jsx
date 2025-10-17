@@ -1,31 +1,65 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
+import Navbar from './components/Layout/Navbar';
+import Footer from './components/Layout/Footer';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
+import Matches from './pages/Matches';
+import ProtectedRoute from './components/ProtectedRoute';
 import './index.css';
-import App from './App';
 
-// Create root and render the app
-const root = ReactDOM.createRoot(document.getElementById('root'));
+function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-gray-50 flex flex-col">
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+              <Route path="/matches" element={
+                <ProtectedRoute>
+                  <Matches />
+                </ProtectedRoute>
+              } />
+              {/* 404 Page */}
+              <Route path="*" element={
+                <div className="min-h-screen flex items-center justify-center">
+                  <div className="text-center">
+                    <h1 className="text-4xl font-bold text-gray-800 mb-4">404</h1>
+                    <p className="text-xl text-gray-600 mb-8">Page not found</p>
+                    <a 
+                      href="/" 
+                      className="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors"
+                    >
+                      Go Home
+                    </a>
+                  </div>
+                </div>
+              } />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
+  );
+}
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
-
-// Performance monitoring (optional)
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-
-// If you want to use service worker for PWA features, you can register it here
-// if ('serviceWorker' in navigator) {
-//   window.addEventListener('load', () => {
-//     navigator.serviceWorker.register('/sw.js')
-//       .then((registration) => {
-//         console.log('SW registered: ', registration);
-//       })
-//       .catch((registrationError) => {
-//         console.log('SW registration failed: ', registrationError);
-//       });
-//   });
-// }
+export default App;
