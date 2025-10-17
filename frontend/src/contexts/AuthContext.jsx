@@ -1,5 +1,9 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config';
+
+// Update axios base URL
+axios.defaults.baseURL = API_BASE_URL;
 
 const AuthContext = createContext();
 
@@ -27,28 +31,9 @@ export const AuthProvider = ({ children }) => {
     }
   }, [token]);
 
-  // Verify token on app load
-  useEffect(() => {
-    const verifyToken = async () => {
-      if (token) {
-        try {
-          // You might want to add a verify token endpoint
-          const response = await axios.get('/api/auth/verify');
-          setUser(response.data.user);
-        } catch (error) {
-          localStorage.removeItem('token');
-          setToken(null);
-        }
-      }
-      setLoading(false);
-    };
-
-    verifyToken();
-  }, [token]);
-
   const login = async (email, password) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const response = await axios.post('/auth/login', { email, password });
       const { token, data } = response.data;
       
       setToken(token);
@@ -65,7 +50,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await axios.post('/api/auth/register', { 
+      const response = await axios.post('/auth/register', { 
         name, 
         email, 
         password 
