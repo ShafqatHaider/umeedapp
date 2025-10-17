@@ -25,11 +25,27 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       localStorage.setItem('token', token);
+      verifyToken();
     } else {
       delete axios.defaults.headers.common['Authorization'];
       localStorage.removeItem('token');
+      setLoading(false);
     }
   }, [token]);
+
+  const verifyToken = async () => {
+    try {
+      // Since we don't have a verify endpoint, we'll try to get user profile
+      const response = await axios.get('/profiles/me');
+      setUser(response.data.user);
+    } catch (error) {
+      console.error('Token verification failed:', error);
+      localStorage.removeItem('token');
+      setToken(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const login = async (email, password) => {
     try {
